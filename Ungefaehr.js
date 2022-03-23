@@ -126,33 +126,32 @@ function draw() {
   var strHour = "stunde";
   
 
-
   if(minute == 0)
     strMin = "";
   else if(minute > 0 && minute < 3)
     strMin = "kurz nach";
   else if(minute >= 3 && minute < 7)
-    strMin = "fünf nach";
+    strMin = "f\xfcnf nach";
   else if(minute >= 7 && minute < 13)
     strMin = "zehn nach";
   else if(minute >= 13 && minute < 17)
     strMin = "viertel nach";
   else if(minute >= 17 && minute < 23)
-    strMin = "zehn vor halb";
+    strMin = "zwanzig nach";
   else if(minute >= 23 && minute < 27)
-    strMin = "fünf vor halb";
+    strMin = "f\xfcnf vor halb";
   else if(minute >= 27 && minute < 33)
     strMin = "halb";
   else if(minute >= 33 && minute < 37)
-    strMin = "fünf nach halb";
+    strMin = "f\xfcnf nach halb";
   else if(minute >= 37 && minute < 43)
-    strMin = "zehn nach halb";
+    strMin = "zwanzig vor";
   else if(minute >= 43 && minute < 47)
     strMin = "viertel vor";
   else if(minute >= 47 && minute < 53)
     strMin = "zehn vor";
   else if(minute >= 53 && minute < 57)
-    strMin = "fünf vor";
+    strMin = "f\xfcnf vor";
   else if(minute >= 57 && minute <= 59)
     strMin = "kurz vor";
   else
@@ -175,7 +174,7 @@ function draw() {
   else if(hour == 4 || hour == 16)
     strHour = "vier";
   else if(hour == 5 || hour == 17)
-    strHour = "fünf";
+    strHour = "f\xfcnf";
   else if(hour == 6 || hour == 18)
     strHour = "sechs";
   else if(hour == 7 || hour == 19)
@@ -189,10 +188,10 @@ function draw() {
   else if(hour == 11 || hour == 23)
     strHour = "elf";
   else if(hour == 12)
-    strHour = "zwölf";
+    strHour = "zw\xf6lf";
   
   
-  let monthStrArr = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+  let monthStrArr = ["Januar", "Februar", "M\xe4rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
   
   
   
