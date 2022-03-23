@@ -1,5 +1,5 @@
 //https://github.com/rozek/banglejs-2-widgets-on-background
-(function () {
+
   Bangle.drawWidgets = function () {
     var w = g.getWidth(), h = g.getHeight();
 
@@ -34,7 +34,7 @@
       g.reset();                               // clears the clipping rectangle!
     }
   };
-})();
+
 
 
 const locale = require("locale");
@@ -58,7 +58,7 @@ var yposGMT = 161;
 
 */
 
-var bottomPadding = 16;
+var bottomPadding = 4;
 
 // Check settings for what type our clock should be
 
@@ -117,8 +117,8 @@ function draw() {
   //var minutes = ("0" + d.getMinutes()).slice(-2);
   var minute = d.getMinutes();
 
-  hour = 14;
-  minute = 19;
+  //hour = 14;
+  //minute = 23;
   
   var strDig = (hour < 10 ? "0" + hour : hour) + ":" + (minute < 10 ? "0" + minute : minute) + " Uhr";
   
@@ -158,7 +158,7 @@ function draw() {
     strMin = "wat?";
   
   
-  if(minute > 30)
+  if(minute >= 23) // fünf vor halb (stunde + 1)
     hour += 1;
   if(hour == 24)
     hour = 0;
@@ -194,7 +194,10 @@ function draw() {
   let monthStrArr = ["Januar", "Februar", "M\xe4rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
   
   
+  let imgMoon = E.toArrayBuffer(atob("GBiBAAAAAAAAAADgAAPgDA5CMxjNEjDFEmDHHmDAAEDAAMDAAMBAgMBjYMBhQMAxwMAYAEAOAGAD4DAA4BgA4BwBwAeHAAH8AAAAAA=="));
+  let imgSun = E.toArrayBuffer(atob("GBiBAAAYAAAYAAAYAAgAEBwAOAx+MAD/AAH/gAP/wAf/4Af/4Of/5+f/5wf/4Af/4AP/wAH/gAD/AAx+MBwAOAgAEAAYAAAYAAAYAA=="))
   
+
 
   let width = g.getWidth() - 8; // vier pixel frei an jeder seite.
 
@@ -204,6 +207,7 @@ function draw() {
   
   
   g.setColor(g.theme.fg2);
+  
   g.drawString(strMin, xyCenter, yposTime, true);
   
   
@@ -220,34 +224,46 @@ function draw() {
   
   g.drawString(strHour, xyCenter, hourYPos, true);
   
+
   
 
 
-
-  // draw Day, name of month, Date
+  // date
   
   let dateHeight = g.setFont(font, dateFontSize).getFontHeight();
   let dateY = g.getHeight() - (dateHeight / 2) - bottomPadding - 8;
   
-  let day = d.getDay();
+  let day = d.getDate();
   let month = d.getMonth();
   let year = d.getFullYear();
   
-  day = 31;
-  month = 8;
-  
-  
   g.drawString([day + ". " + monthStrArr[month]] + ", KW " + getCW(d), xyCenter, dateY, true);
-
-  // digital clock
   
+  
+  // digital clock
   let digiHeight = g.setFont(font, digClockFontSize).getFontHeight();
   g.drawString(strDig, xyCenter, dateY - digiHeight, true);
+
   
+  // Icon
+  /*
+  let iconPosX = 8; // g.getWidth() / 2 - 12;
+  let iconPosY = dateY - digiHeight - 14;
+
+  if(hour < 6 || hour > 22){ // todo sunset/sunrise
+    g.setColor(g.theme.fg2);
+    g.drawImage(imgMoon,iconPosX,iconPosY);
+  }
+  else{
+    g.setColor("#ffaa00");
+    g.drawImage(imgSun,iconPosX,iconPosY);
+  }
+
+  */
   
   
   // Battery Status
-
+  g.setColor(Bangle.isCharging() ? "#ffff00" : g.theme.fg2);
   let bat = E.getBattery();
 
   //bat = 50;
@@ -351,12 +367,24 @@ function draw() {
       //Terminal.println(Bangle.getHealthStatus("day").steps);
     }
     */
-  
-  
+
   queueDraw();
 }
 
 //
+
+
+
+// clean app screen
+//g.clear();
+
+Bangle.loadWidgets();
+Bangle.drawWidgets();
+
+// draw now
+draw();
+
+//Events
 
 // Stop updates when LCD is off, restart when on
 Bangle.on('lcdPower',on=>{
@@ -375,11 +403,3 @@ NRF.on('disconnect',function() { draw(); });
 
 // Show launcher when button pressed
 Bangle.setUI("clock");
-// clean app screen
-g.clear();
-
-Bangle.loadWidgets();
-Bangle.drawWidgets();
-
-// draw now
-draw();
