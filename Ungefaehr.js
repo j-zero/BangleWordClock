@@ -117,14 +117,14 @@ function draw() {
   //var minutes = ("0" + d.getMinutes()).slice(-2);
   var minute = d.getMinutes();
 
-  //hour = 23;
-  //minute = 58;
+  hour = 14;
+  minute = 19;
   
   var strDig = (hour < 10 ? "0" + hour : hour) + ":" + (minute < 10 ? "0" + minute : minute) + " Uhr";
   
   var strMin = "minute";
   var strHour = "stunde";
-  
+  //
 
   if(minute == 0)
     strMin = "";
