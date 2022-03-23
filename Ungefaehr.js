@@ -272,11 +272,11 @@ function draw() {
   let batBarThickness = 3;
   
   if(Bangle.isCharging())
-  batColor = "#ffaa00";
+    batColor = "#ffaa00";
   else{
-    if(bat > 75)
+    if(bat > 50)
     batColor = "#00ff00";
-    else if(bat > 25)
+    else if(bat >= 25 && bat < 50)
     batColor = "#ffff00";
     else if(bat < 25)
     batColor = "#ff0000";
